@@ -1,0 +1,13 @@
+{
+  "name": "metis-testnet-token",
+  "version": "1.0.0",
+  "description": "metis testnet token",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "Eric Lee <eric.l@metis.io>",
+  "license": "MIT",
+  "workspaces": [
+    "contracts"
+  ]
+}

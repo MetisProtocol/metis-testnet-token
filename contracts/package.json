@@ -1,0 +1,21 @@
+{
+  "name": "contracts",
+  "version": "1.0.0",
+  "description": "The contract code",
+  "main": "index.js",
+  "private": "true",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy:sepolia": "hardhat deploy --network sepolia",
+    "verify:sepolia": "hardhat etherscan-verify --network sepolia"
+  },
+  "author": "Eric Lee <eric.l@metis.io>",
+  "license": "ISC",
+  "dependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@openzeppelin/contracts": "^5.0.1",
+    "hardhat": "^2.19.2",
+    "hardhat-deploy": "^0.11.44"
+  }
+}
