@@ -19,15 +19,22 @@
     "@openzeppelin/contracts/utils/Context.sol": {
       "content": "// SPDX-License-Identifier: MIT\n// OpenZeppelin Contracts (last updated v5.0.1) (utils/Context.sol)\n\npragma solidity ^0.8.20;\n\n/**\n * @dev Provides information about the current execution context, including the\n * sender of the transaction and its data. While these are generally available\n * via msg.sender and msg.data, they should not be accessed in such a direct\n * manner, since when dealing with meta-transactions the account sending and\n * paying for execution may not be the actual sender (as far as an application\n * is concerned).\n *\n * This contract is only required for intermediate, library-like contracts.\n */\nabstract contract Context {\n    function _msgSender() internal view virtual returns (address) {\n        return msg.sender;\n    }\n\n    function _msgData() internal view virtual returns (bytes calldata) {\n        return msg.data;\n    }\n\n    function _contextSuffixLength() internal view virtual returns (uint256) {\n        return 0;\n    }\n}\n"
     },
+    "contracts/interfaces/IMetisToken.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\nimport {IERC20} from \"@openzeppelin/contracts/token/ERC20/IERC20.sol\";\n\ninterface IMetisToken is IERC20 {\n    function mint(address _target, uint256 _amount) external;\n\n    function isMiner(address _target) external view returns (bool);\n\n    function addMiner(address[] calldata _miners) external;\n\n    function removeMiner(address[] calldata _miners) external;\n}\n"
+    },
     "contracts/Token.sol": {
-      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\nimport {ERC20} from \"@openzeppelin/contracts/token/ERC20/ERC20.sol\";\nimport {Ownable} from \"@openzeppelin/contracts/access/Ownable.sol\";\n\ncontract MetisToken is ERC20, Ownable {\n    mapping(address => bool) internal miners;\n\n    modifier onlyMiner() {\n        require(miners[msg.sender], \"403\");\n        _;\n    }\n\n    constructor(\n        uint256 initialSupply\n    ) ERC20(\"Metis Testnet Token\", \"METIS\") Ownable(msg.sender) {\n        _mint(msg.sender, initialSupply);\n        miners[msg.sender] = true;\n    }\n\n    function mint(address _target, uint256 _amount) public onlyMiner {\n        _mint(_target, _amount);\n    }\n\n    function isMiner(address _target) public view returns (bool) {\n        return miners[_target];\n    }\n\n    function addMiner(address[] calldata _miners) external onlyOwner {\n        for (uint i = 0; i < _miners.length; i++) {\n            miners[_miners[i]] = true;\n        }\n    }\n\n    function removeMiner(address[] calldata _miners) external onlyOwner {\n        for (uint i = 0; i < _miners.length; i++) {\n            delete miners[_miners[i]];\n        }\n    }\n}\n"
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\nimport {ERC20} from \"@openzeppelin/contracts/token/ERC20/ERC20.sol\";\nimport {Ownable} from \"@openzeppelin/contracts/access/Ownable.sol\";\nimport {IMetisToken} from \"./interfaces/IMetisToken.sol\";\n\ncontract MetisToken is ERC20, Ownable, IMetisToken {\n    mapping(address => bool) internal miners;\n\n    bool public charge = true;\n\n    uint256 public rate = 100; // rate is ether/metis\n\n    modifier onlyMiner() {\n        require(miners[msg.sender], \"Not miner\");\n        _;\n    }\n\n    function setRate(uint256 _rate) public onlyOwner {\n        require(_rate > 0, \"rate == 0\");\n        rate = _rate;\n    }\n\n    function setCharge(bool _charge) public onlyOwner {\n        charge = _charge;\n    }\n\n    constructor() ERC20(\"Metis Testnet Token\", \"METIS\") Ownable(msg.sender) {\n        miners[msg.sender] = true;\n    }\n\n    function mint(address _target, uint256 _amount) public override onlyMiner {\n        _mint(_target, _amount);\n    }\n\n    function isMiner(address _target) public view override returns (bool) {\n        return miners[_target];\n    }\n\n    function addMiner(address[] calldata _miners) external override onlyOwner {\n        for (uint i = 0; i < _miners.length; i++) {\n            miners[_miners[i]] = true;\n        }\n    }\n\n    function removeMiner(\n        address[] calldata _miners\n    ) external override onlyOwner {\n        for (uint i = 0; i < _miners.length; i++) {\n            delete miners[_miners[i]];\n        }\n    }\n\n    receive() external payable {\n        uint256 amount = rate;\n\n        if (charge) {\n            require(msg.value > 0, \"The faucet is not free of charge\");\n            amount *= msg.value;\n        }\n\n        if (msg.value > 0) {\n            payable(owner()).transfer(msg.value);\n        }\n\n        return _mint(msg.sender, amount);\n    }\n}\n"
     }
   },
   "settings": {
-    "evmVersion": "paris",
     "optimizer": {
-      "enabled": false,
+      "enabled": true,
       "runs": 200
+    },
+    "evmVersion": "paris",
+    "metadata": {
+      "bytecodeHash": "none",
+      "useLiteralContent": true
     },
     "outputSelection": {
       "*": {
@@ -46,9 +53,6 @@
           "ast"
         ]
       }
-    },
-    "metadata": {
-      "useLiteralContent": true
     }
   }
 }

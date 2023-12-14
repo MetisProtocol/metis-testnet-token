@@ -11,7 +11,7 @@ const func: DeployFunction = async function ({
 
   await deploy(name, {
     from: deployer,
-    args: [0],
+    args: [],
     waitConfirmations: 1,
     log: true,
   });

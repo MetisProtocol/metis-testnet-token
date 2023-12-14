@@ -3,7 +3,19 @@ import "@nomicfoundation/hardhat-toolbox";
 import "hardhat-deploy";
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.23",
+  solidity: {
+    version: "0.8.23",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 200,
+      },
+      evmVersion: "paris",
+      metadata: {
+        bytecodeHash: "none",
+      },
+    },
+  },
   networks: {
     sepolia: {
       url: "https://ethereum-sepolia.publicnode.com",
