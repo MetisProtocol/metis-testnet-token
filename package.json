@@ -1,9 +1,12 @@
 {
   "name": "metis-testnet-token",
   "version": "1.0.0",
+  "private": true,
   "description": "metis testnet token",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npm test --ws"
+  },
   "keywords": [],
   "author": "Eric Lee <eric.l@metis.io>",
   "license": "MIT",
