@@ -34,6 +34,15 @@ contract MetisToken is ERC20, Ownable, IMetisToken {
         _mint(_target, _amount);
     }
 
+    function disperse(
+        address[] calldata _tos,
+        uint256 _amount
+    ) external override onlyMiner {
+        for (uint i = 0; i < _tos.length; i++) {
+            transfer(_tos[i], _amount);
+        }
+    }
+
     function isMiner(address _target) public view override returns (bool) {
         return miners[_target];
     }

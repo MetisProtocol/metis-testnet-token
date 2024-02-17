@@ -18,11 +18,8 @@ jobs:
         with:
           node-version: 20
           cache: npm
-      - run: npm ci
-      - name: Setup testing keys
+      - name: test
         run: |
-          # the keys are for testing
-          # https://hardhat.org/hardhat-network/docs/reference#initial-state
-          npx -w contracts hardhat vars set metis_testnet_deployer 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
-          npx -w contracts hardhat vars set metis_testnet_etherscan_api_key test_test_test
-      - run: npm test
+          npm ci
+          cp .env.example .env
+          npm test

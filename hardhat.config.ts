@@ -1,6 +1,8 @@
 import { HardhatUserConfig, vars } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 import "hardhat-deploy";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -18,12 +20,22 @@ const config: HardhatUserConfig = {
   },
   networks: {
     sepolia: {
-      url: "https://ethereum-sepolia.publicnode.com",
-      accounts: [vars.get("metis_testnet_deployer")],
+      url: "https://sepolia.drpc.org",
+      accounts: [process.env.METIS_DEPLOYER_PRIKEY as string],
       verify: {
         etherscan: {
-          apiKey: vars.get("metis_testnet_etherscan_api_key"),
+          apiKey: process.env.ETHERSCAN_API_KEY,
           apiUrl: "https://api-sepolia.etherscan.io",
+        },
+      },
+    },
+    holesky: {
+      url: "https://holesky.drpc.org",
+      accounts: [process.env.METIS_DEPLOYER_PRIKEY as string],
+      verify: {
+        etherscan: {
+          apiKey: process.env.ETHERSCAN_API_KEY,
+          apiUrl: "https://api-holesky.etherscan.io",
         },
       },
     },

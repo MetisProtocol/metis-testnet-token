@@ -1,16 +1,23 @@
 {
-  "name": "metis-testnet-token",
+  "name": "metis-testnet-tokens",
   "version": "1.0.0",
-  "private": true,
-  "description": "metis testnet token",
-  "main": "index.js",
-  "scripts": {
-    "test": "npm test --ws"
-  },
-  "keywords": [],
   "author": "Eric Lee <eric.l@metis.io>",
+  "description": "The metis tokon contract",
+  "private": "true",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy:sepolia": "hardhat deploy --network sepolia",
+    "verify:sepolia": "hardhat etherscan-verify --network sepolia",
+    "deploy:holesky": "hardhat deploy --network holesky",
+    "verify:holesky": "hardhat etherscan-verify --network holesky"
+  },
   "license": "MIT",
-  "workspaces": [
-    "contracts"
-  ]
+  "dependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@openzeppelin/contracts": "^5.0.1",
+    "dotenv": "^16.4.4",
+    "hardhat": "^2.19.4",
+    "hardhat-deploy": "^0.11.45"
+  }
 }

@@ -5,6 +5,7 @@ Metis Testnet Token
 | Network | Address                                                                                                                       |
 | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | Sepolia | [0x7f49160EB9BB068101d445fe77E17ecDb37D0B47](https://sepolia.etherscan.io/address/0x7f49160eb9bb068101d445fe77e17ecdb37d0b47) |
+| Holesky | [0xaf8e5B10c69c983204505cDCD56Ec2aC2280D08e](https://holesky.etherscan.io/address/0xaf8e5B10c69c983204505cDCD56Ec2aC2280D08e) |
 
 ## How to get the test tokens?
 
