@@ -3,19 +3,11 @@ pragma solidity ^0.8.0;
 
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
-import {IMetisToken} from "./interfaces/IMetisToken.sol";
 
-contract MetisToken is ERC20, Ownable, IMetisToken {
-    mapping(address => bool) internal miners;
-
+contract MetisToken is ERC20, Ownable {
     bool public charge = true;
 
     uint256 public rate = 100; // rate is ether/metis
-
-    modifier onlyMiner() {
-        require(miners[msg.sender], "Not miner");
-        _;
-    }
 
     function setRate(uint256 _rate) public onlyOwner {
         require(_rate > 0, "rate == 0");
@@ -26,38 +18,26 @@ contract MetisToken is ERC20, Ownable, IMetisToken {
         charge = _charge;
     }
 
-    constructor() ERC20("Metis Testnet Token", "METIS") Ownable(msg.sender) {
-        miners[msg.sender] = true;
+    constructor() ERC20("Metis Stub", "METIS") Ownable(msg.sender) {
+        _mint(msg.sender, 1e8 ether);
     }
 
-    function mint(address _target, uint256 _amount) public override onlyMiner {
+    function mint(address _target, uint256 _amount) public onlyOwner {
         _mint(_target, _amount);
     }
 
-    function disperse(
+    function airdrop(
         address[] calldata _tos,
         uint256 _amount
-    ) external override onlyMiner {
+    ) external onlyOwner {
         for (uint i = 0; i < _tos.length; i++) {
-            transfer(_tos[i], _amount);
+            _mint(_tos[i], _amount);
         }
     }
 
-    function isMiner(address _target) public view override returns (bool) {
-        return miners[_target];
-    }
-
-    function addMiner(address[] calldata _miners) external override onlyOwner {
-        for (uint i = 0; i < _miners.length; i++) {
-            miners[_miners[i]] = true;
-        }
-    }
-
-    function removeMiner(
-        address[] calldata _miners
-    ) external override onlyOwner {
-        for (uint i = 0; i < _miners.length; i++) {
-            delete miners[_miners[i]];
+    function disperse(address[] calldata _tos, uint256 _amount) external {
+        for (uint i = 0; i < _tos.length; i++) {
+            _transfer(msg.sender, _tos[i], _amount);
         }
     }
 

@@ -15,37 +15,9 @@ describe("MetisToken", function () {
   describe("Deployment", () => {
     it("Initial state", async () => {
       const { token, owner } = await loadFixture(fixture);
-      expect(await token.totalSupply()).to.equal(0);
-      expect(await token.balanceOf(owner)).to.equal(0);
-      expect(await token.isMiner(owner)).to.be.true;
-    });
-  });
-
-  describe("Miner", () => {
-    it("addMiner and removeMiner", async function () {
-      const { token, otherAccount } = await loadFixture(fixture);
-      expect(await token.isMiner(otherAccount)).to.be.false;
-      expect(await token.addMiner([otherAccount]));
-      expect(await token.isMiner(otherAccount)).to.be.true;
-      expect(await token.removeMiner([otherAccount]));
-      expect(await token.isMiner(otherAccount)).to.be.false;
-
-      await expect(token.connect(otherAccount).addMiner([otherAccount]))
-        .to.be.revertedWithCustomError(token, "OwnableUnauthorizedAccount")
-        .withArgs(otherAccount.address);
-      await expect(token.connect(otherAccount).removeMiner([otherAccount]))
-        .to.be.revertedWithCustomError(token, "OwnableUnauthorizedAccount")
-        .withArgs(otherAccount.address);
-    });
-
-    it("mint", async function () {
-      const { token, otherAccount } = await loadFixture(fixture);
-      const amount = 100;
-      expect(await token.mint(otherAccount, amount));
-      expect(await token.balanceOf(otherAccount)).to.be.eq(amount);
-      await expect(
-        token.connect(otherAccount).mint(otherAccount, amount)
-      ).to.be.revertedWith("Not miner");
+      const init = BigInt(1e8) * BigInt(1e18);
+      expect(await token.totalSupply()).to.equal(init);
+      expect(await token.balanceOf(owner)).to.equal(BigInt(1e8) * BigInt(1e18));
     });
   });
 
