@@ -39,6 +39,16 @@ const config: HardhatUserConfig = {
         },
       },
     },
+    devnet: {
+      url: process.env.DEVNET_RPC,
+      accounts: [process.env.DEVNET_DEPLOYER_KEY as string],
+      verify: {
+        etherscan: {
+          apiKey: process.env.ETHERSCAN_API_KEY,
+          apiUrl: process.env.DEVNET_EXPLORER_API,
+        },
+      },
+    },
   },
   namedAccounts: {
     deployer: 0,
