@@ -1,8 +1,10 @@
-import { HardhatUserConfig, vars } from "hardhat/config";
+import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 import "hardhat-deploy";
-import * as dotenv from "dotenv";
-dotenv.config();
+
+import "./tasks/airdrop";
+
+import "dotenv/config";
 
 const config: HardhatUserConfig = {
   solidity: {
