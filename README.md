@@ -19,6 +19,4 @@ for example https://sepolia.etherscan.io/tx/0xcdd606c162161204d05048af38383f1c37
 
 Please note that we may change the exchange rate from time to time.
 
-After that you will get the tokens on Eth instead of on Metis, you still need to bridge them to the layer2.
-
-The bridge home [https://testnet-bridge.metis.io/home](https://bridge.metis.io/home)
+After that you will get the tokens on Eth instead of on Metis, you still need to use the [bridge](https://bridge.metis.io/home) to transfer the tokens to layer2.
