@@ -21,4 +21,4 @@ Please note that we may change the exchange rate from time to time.
 
 After that you will get the tokens on Eth instead of on Metis, you still need to bridge them to the layer2.
 
-The bridge home https://testnet-bridge.metis.io/home
+The bridge home [https://testnet-bridge.metis.io/home](https://bridge.metis.io/home)
