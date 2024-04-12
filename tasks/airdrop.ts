@@ -1,7 +1,7 @@
 import { task, types } from "hardhat/config";
 
 task("airdrop", "disperse tokens")
-  .addParam("amount", "Amount in Ether", undefined, types.float)
+  .addParam("amount", "Amount in Ether", undefined, types.string)
   .addParam("address", "Address separated by commas", undefined, types.string)
   .setAction(async (args, hre) => {
     const amount = hre.ethers.parseEther(args["amount"]);
