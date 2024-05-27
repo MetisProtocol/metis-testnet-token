@@ -11,9 +11,9 @@ Metis Testnet Token
 
 **Just send your testnet Ethers to the testnet Metis contract directly**.
 
-and the current exchange rate is 1 testETH = 100 testMetis.
+and the current exchange rate is 1 testETH = 10 testMetis.
 
-It means that if you send 0.01 testETH to the contract, you will get 1 testMetis
+It means that if you send 0.1 testETH to the contract, you will get 1 testMetis
 
 for example https://sepolia.etherscan.io/tx/0xcdd606c162161204d05048af38383f1c37da1904753397007137b22e2b3697a1
 
